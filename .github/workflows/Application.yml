@@ -1,0 +1,32 @@
+
+name: Application CICD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: Agent_Snow
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: action/setup-node@v4
+      with:
+        node-version: '23'
+
+    - name: Frontend Compilation
+      run: |
+        cd client
+        find . -name "*.js" -exec node --check { } + 
+
+    - name: Backend Compilation
+      run: |
+        cd api
+        find . -name "*.js" -exec node --checj { } + 
